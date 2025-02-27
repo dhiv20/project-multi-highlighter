@@ -1,0 +1,30 @@
+FROM python:3.10-slim
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive \
+    QT_X11_NO_MITSHM=1 \
+    DISPLAY=:0
+
+# Install dependencies
+RUN apt update && apt install -y \
+    tesseract-ocr tesseract-ocr-eng \
+    libsm6 libxext6 libxrender-dev \
+    libx11-xcb1 libfontconfig1 \
+    x11-utils xserver-xorg x11-xserver-utils xinit \
+    tk libx11-6 libxft2 libxss1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the application files
+COPY . /app
+
+# Install Python dependencies
+RUN pip install --no-cache-dir opencv-python numpy pytesseract mss tk
+
+# Set environment variable for X11
+ENV DISPLAY=:0
+
+# Command to run the application
+CMD ["python", "multi_highlighter.py"]

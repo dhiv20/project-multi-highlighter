@@ -1,0 +1,33 @@
+FROM python:3.10-slim
+
+# Set environment variables to avoid prompts
+ENV DEBIAN_FRONTEND=noninteractive \
+    QT_X11_NO_MITSHM=1 \
+    DISPLAY=:0
+
+# Install system dependencies
+RUN apt update && apt install -y \
+    tesseract-ocr tesseract-ocr-eng \
+    libsm6 libxext6 libxrender-dev \
+    qtbase5-dev qtchooser qt5-qmake qttools5-dev-tools \
+    libxcb-xinerama0 libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xfixes0 \
+    libxcb-shape0 libxcb-shm0 libxcb-util1 libxcb-xinput0 libxcb-xkb1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the application files
+COPY . /app
+
+# Install Python dependencies
+RUN pip install --no-cache-dir opencv-python numpy pytesseract mss pyqt5
+
+# Set environment variable for Qt to find plugins
+ENV QT_QPA_PLATFORM_PLUGIN_PATH="/usr/lib/x86_64-linux-gnu/qt5/plugins/platforms"
+
+# Set the Tesseract OCR path
+ENV TESSERACT_PATH="/usr/bin/tesseract"
+
+# Command to run the application
+CMD ["python", "/app/multi_highlighter.py"]
