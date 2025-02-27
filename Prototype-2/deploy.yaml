@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multi-highlighter-dep
+  labels:
+    app: highlighter
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: highlighter
+  template:
+    metadata:
+      labels:
+        app: highlighter
+    spec:
+      containers:
+      - name: multi-highlighter-cont
+        image: d2bdocker/multi-high:1
+        ports:
+        - containerPort: 8000
