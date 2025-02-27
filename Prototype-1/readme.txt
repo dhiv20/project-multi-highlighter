@@ -1,4 +1,4 @@
-I'll create a Python-based prototype for your multi-highlighter application using the following technologies:  
+This is a Python-based prototype for multi-highlighter application which uses following technologies:  
 
 - **PyQt5** (for GUI and transparent overlay window)  
 - **Tesseract OCR** (for text recognition and extraction)  
@@ -9,8 +9,6 @@ This prototype will:
 1. Capture the screen periodically.  
 2. Extract text from the captured image using OCR.  
 3. Highlight the user-specified keywords in an overlay window.  
-
-Let me generate the code for you.
 
 ### Installation Guide:
 
@@ -54,7 +52,7 @@ Let me generate the code for you.
    python multi_highlighter.py
    ```
 
-If you're getting `[WinError 740]`, Tesseract may need elevated permissions.
+If getting `[WinError 740]`, means Tesseract may need elevated permissions.
 - Right-click **Command Prompt** → **Run as Administrator**.
 - Then try running your script:
   ```sh
